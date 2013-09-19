@@ -12,15 +12,17 @@ module Configuration
 	@fos = nil
 
 	def initProperties
-		@prop = Properties.new
-		@prop.load FileInputStream.new "config.properties"
-	rescue IOException
-		self.resetProperties
+		begin
+			@prop = Properties.new
+			@prop.load FileInputStream.new "config.properties"
+		rescue IOException
+			self.resetProperties
+		end
 	end
 
 	def resetProperties
-		@prop.setProperty "font_name","Alegreya"
-		@prop.setProperty "font_size","18"
+		@prop.setProperty "fontName","Alegreya"
+		@prop.setProperty "fontSize","18"
 		@fos = FileOutputStream.new "config.properties"
 		@prop.store @fos,nil
 	end

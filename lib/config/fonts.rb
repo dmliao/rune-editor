@@ -6,11 +6,13 @@ module Configuration
 	import java.awt.Font;
 
 	def updateTextBoxFont textArea
-		fName = getProperty "font_name", "Arial"
-		fSize = getProperty "font_size", "16"
+		fName = getProperty "fontName", "Arial"
+		fSize = getProperty "fontSize", "16"
+		lineSpacing = getProperty "lineSpacing", "1.5"
+		paraSpacing = getProperty "paraSpacing", "32"
 		f = Font.new fName, Font::PLAIN, fSize.to_i
 
-		textArea.setFont f
+		textArea.setStyle f, lineSpacing, paraSpacing
 	end
 
 	def chooseFont

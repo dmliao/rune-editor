@@ -1,11 +1,13 @@
 require "config/config.rb"
 require "config/fonts.rb"
 require "config/textarea.rb"
+require "io/files.rb"
 require "components/writearea.rb"
 require "components/scrollbar.rb"
 
 include Java
 include Configuration
+include FilesIO
 
 import java.awt.Dimension
 import java.awt.Color
@@ -42,6 +44,8 @@ class App < JFrame
 		self.updateConfigs
 
 		self.pack
+
+		self.openDocument @textPanel, self
 	end
 
 	def initGUI
