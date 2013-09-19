@@ -71,12 +71,8 @@ class WriteArea < JTextPane
 		g.setColor getBackground
         g.fillRect 0, 0, getWidth, getHeight
         graphics2d = g
-        graphics2d.setRenderingHint RenderingHints::KEY_ANTIALIASING,RenderingHints::VALUE_ANTIALIAS_ON
-
-        ##Stupid test again.
-        @parser.parse StringReader.new self.getText
-        puts self.getText
-
+        graphics2d.setRenderingHint RenderingHints::KEY_TEXT_ANTIALIASING,RenderingHints::VALUE_TEXT_ANTIALIAS_ON
+        graphics2d.setRenderingHint RenderingHints::KEY_RENDERING, RenderingHints::VALUE_RENDER_QUALITY
 		super
 	end
 

@@ -23,8 +23,9 @@ module FilesIO
 				fr = FileReader.new file
 				reader = BufferedReader.new fr
 				line = reader.readLine
+				doc = textPane.getStyledDocument
 				while line != nil
-					puts line
+					doc.insertString doc.getLength, "\n"+line, nil
 					line = reader.readLine
 				end
 			end
