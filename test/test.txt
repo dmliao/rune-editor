@@ -1,0 +1,58 @@
+# Lecture 3 #
+
+Chapter 2: 
+Know Table 2.3
+	names of simple irons
+Table 2.4
+	names of transition metal compounds (e.g. Fe(II)Cl2)
+	Use Roman numerals to display how many electrons are donated
+Table 2.5
+	More complex ions (e.g. NH4+ = ammonium, OH- = hydroxide)
+
+What is chemistry? Study of matter and the change in matter
+
+C2H5OH ethanol
+Moles->Mass, use atomic masses and multiply by Avogadro's # (molar mass = mass of one mole)
+Mass->Moles, figure out the mass of one mole and divide out the mass
+
+If you're given percents:
+38.67 % carbon
+16.23 % hydrogen
+45.10 $ nitrogen
+
+Assume you have 100g of substance, so 38.67 g carbon, etc.
+Then divide them out by the molar mass of each element, to figure out the proportions in moles
+
+3.22 mole C
+16.10 mole H
+3.22 mole N
+
+Formula is CH5N.
+
+Benzene: C6H6 - molecular formula
+CH - empirical formula (simplified)
+
+Chemical Equations - matter MUST be conserved!
+Need to balance chemical reactions.
+
+reactants -> products
+
+CH4(g) + 2O2(g) -> CO2(g) + 2H2O(l)
+Stoichiometric Reaction!
+
+### Example ###
+Combustion of Propane yields CO2 and H2O (remember: combustion means reacting with oxygen!)
+
+What mass of O2 is needed to burn 96.1 g of propane?
+Propane = C3H8
+
+Get the chemical equation:
+C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(l)
+# moles C3H8 = 96.1g/molar mass C3H8(44.1g/mole) = 2.18 moles
+
+We need 5x the # moles C3H8 of O2, so we'll need 10.9 moles of O2...now we have to find the mass of that.
+10.9 moles * 32 g/mole = 349 grams of O2
+
+Remember, always:
+1. Read the question
+2. Check your work

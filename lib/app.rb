@@ -46,6 +46,7 @@ class App < JFrame
 		self.pack
 
 		self.openDocument @textPanel, self
+		self.saveDocument @textPanel, self
 	end
 
 	def initGUI

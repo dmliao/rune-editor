@@ -21,3 +21,11 @@ Use Launch4j to make exe files!
 
 Bugs:
 JTextPane makes long uninterrupted strings create a horizontal scrollbar. Fix that.
+HTMLText doesn't support line-height. Until then, I'll have to use plaintext, so no syntax highlighting.
+Sometimes when opening files, words get cut off until window resize or editing
+
+TODO:
+
+File saving
+Scrollbar colors as config properties
+Key bindings as a keybindings.properties file

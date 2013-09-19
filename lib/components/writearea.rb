@@ -73,11 +73,13 @@ class WriteArea < JTextPane
         graphics2d = g
         graphics2d.setRenderingHint RenderingHints::KEY_TEXT_ANTIALIASING,RenderingHints::VALUE_TEXT_ANTIALIAS_ON
         graphics2d.setRenderingHint RenderingHints::KEY_RENDERING, RenderingHints::VALUE_RENDER_QUALITY
+
+        puts @content
 		super
 	end
 
 	def updateContent
-		@content = self.getText
+		@content = self.getStyledDocument.getText 0, self.getStyledDocument.getLength
 	end
 
 	def parserGetContent
@@ -92,6 +94,12 @@ class WriteArea < JTextPane
 		@content = content
 		self.setText @content
 	end
+
+	def addContent content
+		self.getStyledDocument.insertString self.getStyledDocument.getLength, content, nil
+		updateContent
+	end
+
 
 end
 
@@ -120,7 +128,6 @@ class TextCaret < DefaultCaret
 		end
 		if isVisible
 			g.fillRect r::x, r::y, 1, @height
-			puts @height
 		end
 	end
 
