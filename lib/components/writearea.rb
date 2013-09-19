@@ -73,8 +73,6 @@ class WriteArea < JTextPane
         graphics2d = g
         graphics2d.setRenderingHint RenderingHints::KEY_TEXT_ANTIALIASING,RenderingHints::VALUE_TEXT_ANTIALIAS_ON
         graphics2d.setRenderingHint RenderingHints::KEY_RENDERING, RenderingHints::VALUE_RENDER_QUALITY
-
-        puts @content
 		super
 	end
 
@@ -100,9 +98,9 @@ class WriteArea < JTextPane
 		updateContent
 	end
 
-
 end
 
+# Custom caret to fix line height issues
 class TextCaret < DefaultCaret
 
 	@height = 16

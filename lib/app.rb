@@ -36,6 +36,8 @@ class App < JFrame
 	@footerPanel = nil
 	@boxLayout = nil
 
+	@footerText = nil
+
 	def initialize
 		super "Rune Desktop Writer"
 
@@ -46,7 +48,9 @@ class App < JFrame
 		self.pack
 
 		self.openDocument @textPanel, self
-		self.saveDocument @textPanel, self
+		self.saveDocument true, @textPanel, self
+
+		self.updateFooterPanel self.getCurrentDocument
 	end
 
 	def initGUI
@@ -84,11 +88,15 @@ class App < JFrame
 		footerPanel = JPanel.new
 		footerPanel.setOpaque false
 		
-		footerText = JLabel.new "Footer Text Here!"
+		@footerText = JLabel.new "Footer Text Here!"
 		footerPanel.setBorder EmptyBorder.new 0, 0, 0, 0
-		footerPanel.add footerText
+		footerPanel.add @footerText
 
 		return footerPanel
+	end
+
+	def updateFooterPanel footerText
+		@footerText.setText footerText
 	end
 
 	def createMainPanel

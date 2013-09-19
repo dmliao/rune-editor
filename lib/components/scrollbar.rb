@@ -17,7 +17,7 @@ class ScrollBarUI < BasicScrollBarUI
 
 	def paintTrack g, c, trackBounds
 		g.setColor @trackColor
-		g.fillRect 0,0,@barThickness,trackBounds::height
+		g.fillRect 0,0,trackBounds::width,trackBounds::height
 	end
 
 	def paintThumb g, c, thumbBounds
@@ -26,7 +26,7 @@ class ScrollBarUI < BasicScrollBarUI
 		end
 		g.translate thumbBounds::x, thumbBounds::y
 		g.setColor @thumbColor
-		g.fillRect 0,0,@barThickness,thumbBounds::height
+		g.fillRect 0,0,thumbBounds::width,thumbBounds::height
 	end
 
 	def createDecreaseButton orientation
@@ -57,8 +57,16 @@ class RuneScrollPane < JScrollPane
 		ui = ScrollBarUI.new
 		ui.setStyle thickness, trackColor, thumbColor
 
+		horUI = ScrollBarUI.new
+		horUI.setStyle thickness, trackColor, thumbColor
+
 		self.getVerticalScrollBar.setUI ui
+		self.getHorizontalScrollBar.setUI horUI
+
+		self.getVerticalScrollBar.setOpaque false
+		self.getHorizontalScrollBar.setOpaque false
 
 		self.getVerticalScrollBar.setPreferredSize Dimension.new thickness,self.getVerticalScrollBar.getSize.height
+		self.getHorizontalScrollBar.setPreferredSize Dimension.new self.getHorizontalScrollBar.getSize.width,thickness
 	end
 end

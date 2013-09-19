@@ -28,5 +28,8 @@ module Configuration
 
 		return Color.new r.to_i,g.to_i,b.to_i,opacity.to_i		
 	end
+
+	def updateScrollbarStyle scrollBar
+	end
 	
 end
