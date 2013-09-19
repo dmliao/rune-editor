@@ -7,12 +7,16 @@ import java.awt.Color
 
 class ScrollBarUI < BasicScrollBarUI
 	@barThickness = 4
-	def setStyle thickness
+	@trackColor = nil
+	@thumbColor = nil
+	def setStyle thickness, trackColor, thumbColor
 		@barThickness = thickness
+		@trackColor = trackColor
+		@thumbColor = thumbColor
 	end
 
 	def paintTrack g, c, trackBounds
-		g.setColor Color.new 0,0,0,24
+		g.setColor @trackColor
 		g.fillRect 0,0,@barThickness,trackBounds::height
 	end
 
@@ -21,7 +25,7 @@ class ScrollBarUI < BasicScrollBarUI
 			return
 		end
 		g.translate thumbBounds::x, thumbBounds::y
-		g.setColor Color.new 64,64,64,255
+		g.setColor @thumbColor
 		g.fillRect 0,0,@barThickness,thumbBounds::height
 	end
 
@@ -47,8 +51,11 @@ class RuneScrollPane < JScrollPane
 		super view
 		thickness = 8
 
+		trackColor = Color.new 0,0,0,24
+		thumbColor = Color.new 0,0,0,128
+
 		ui = ScrollBarUI.new
-		ui.setStyle thickness
+		ui.setStyle thickness, trackColor, thumbColor
 
 		self.getVerticalScrollBar.setUI ui
 
