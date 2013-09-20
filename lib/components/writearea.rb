@@ -21,14 +21,17 @@ import javax.swing.text.DefaultCaret
 # Then, we can pass the content into a save file!
 class WriteArea < JTextPane
 
-	@content = nil
-	@parser = nil
-	@editorKit = nil
-	@caret = nil
+	@content = nil # the text content of the pane
+	@edited = nil # whether the textpane has been edited since the last time this was checked
+	@parser = nil # HTMLParser (unused)
+	@editorKit = nil # the style editor for an HTML textpane (unused)
+	@caret = nil # the caret used in the text pane
 
 	def initialize
 		super
 		@editorKit = HTMLEditorKit.new
+
+		@edited = false
 
 		#self.setContentType 'text/html'
 		self.setOpaque false
@@ -43,6 +46,22 @@ class WriteArea < JTextPane
 
 		self.setCaret @caret
 
+		docListener = SimpleDocumentListener.new do
+			@edited = true
+			puts "Edited"
+		end
+		self.getDocument.addDocumentListener docListener
+
+		resetEdited
+
+	end
+
+	def resetEdited
+		@edited = false
+	end
+
+	def getEdited
+		return @edited
 	end
 
 	def setStyle font, spacing, paragraphSpacing
@@ -96,6 +115,10 @@ class WriteArea < JTextPane
 	def addContent content
 		self.getStyledDocument.insertString self.getStyledDocument.getLength, content, nil
 		updateContent
+	end
+
+	def clearContent
+		self.setText ""
 	end
 
 end
@@ -155,4 +178,41 @@ class HTML2Text < HTMLEditorKit::ParserCallback
 	def getText
 		return @s.toString
 	end
+end
+
+##Helper class implementing DocumentListener to check if the textpane has been edited
+# Simple implementation of javax.swing.event.DocumentListener that
+# enables specifying a single code block that will be called
+# when any of the three DocumentListener methods are called.
+#
+# Note that unlike Java, where it is necessary to subclass the abstract
+# Java class SimpleDocumentListener, we can merely create an instance of
+# the Ruby class SimpleDocumentListener with the code block we want
+# executed when a DocumentEvent occurs.   This code can be in the form of
+# a code block, lambda, or proc.
+ 
+import javax.swing.event.DocumentListener
+ 
+class SimpleDocumentListener
+
+	# This is how we declare that this class implements the Java
+	# DocumentListener interface in JRuby:
+	include DocumentListener
+
+	attr_accessor :behavior
+
+	def initialize(&behavior)
+		self.behavior = behavior
+	end
+
+	def changedUpdate(event)
+		#behavior.call event; 
+	end
+	def insertUpdate(event)  
+		behavior.call event; 
+	end
+	def removeUpdate(event)   
+		behavior.call event; 
+	end
+
 end

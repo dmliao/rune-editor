@@ -4,6 +4,7 @@ require "config/textarea.rb"
 require "io/files.rb"
 require "components/writearea.rb"
 require "components/scrollbar.rb"
+require "components/ribbon.rb"
 
 include Java
 include Configuration
@@ -36,6 +37,8 @@ class App < JFrame
 	@footerPanel = nil
 	@boxLayout = nil
 
+	@ribbon = nil
+
 	@footerText = nil
 
 	def initialize
@@ -46,9 +49,6 @@ class App < JFrame
 		self.updateConfigs
 
 		self.pack
-
-		self.openDocument @textPanel, self
-		self.saveDocument true, @textPanel, self
 
 		self.updateFooterPanel self.getCurrentDocument
 	end
@@ -69,12 +69,18 @@ class App < JFrame
 		@mainPanel.add @page
 		self.add @mainPanel, BorderLayout::CENTER
 
+		@ribbon = ToolbarRibbon.new
+		@ribbon.setDependents @textPanel, self
+		@ribbon.createTasks
+		self.add @ribbon, BorderLayout::NORTH
+
 		self.setVisible true
+		@textPanel.resetEdited
 
 	end
 
 	def setLookAndFeel
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+		# UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 		
 	end
 

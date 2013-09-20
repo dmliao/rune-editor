@@ -26,6 +26,6 @@ Sometimes when opening files, words get cut off until window resize or editing
 
 TODO:
 
-Check if file has been changed since last save!
+Check if file has been changed since last save! (it's still broken a bit...)
 Scrollbar colors as config properties
 Key bindings as a keybindings.properties file

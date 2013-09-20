@@ -17,10 +17,11 @@ module FilesIO
 
 	def createNewDocument textPane, frame
 		@openFile = nil
+		textPane.resetEdited
 
 	end
 
-	def openDocument textPane, frame
+	def handleOpenDocument textPane, frame
 		fileChooser = JFileChooser.new
 		returnVal = fileChooser.showOpenDialog frame
 		if returnVal == JFileChooser::APPROVE_OPTION
@@ -30,10 +31,25 @@ module FilesIO
 				@openFile = file
 			end
 		end
+	end
 
+	def openDocument textPane, frame
+		if textPane.getEdited == true
+			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm Open", JOptionPane::YES_NO_OPTION
+			if (dialogResult == JOptionPane::YES_OPTION)
+				saveDocument false, textPane, frame #Save the document first!
+				handleOpenDocument textPane, frame #recursively open another document!
+			else	
+				handleOpenDocument textPane, frame
+			end
+		else
+			handleOpenDocument textPane, frame
+		end
 	end
 
 	def saveDocument saveAs, textPane, frame
+
+		textPane.updateContent
 		if @openFile == nil || saveAs == true
 
 			fileChooser = JFileChooser.new
@@ -58,6 +74,8 @@ module FilesIO
 			end
 
 		else
+			puts @openFile.getPath
+			puts textPane.getContent
 			writeDocument @openFile.getPath,textPane
 		end
 	end
@@ -77,11 +95,14 @@ module FilesIO
 			reader = BufferedReader.new fr
 			line = reader.readLine
 			doc = textPane.getStyledDocument
+			textPane.clearContent
 			while line != nil
 				ls = System.getProperty "line.separator"
 				textPane.addContent line + ls
 				line = reader.readLine
 			end
+
+			textPane.resetEdited
 		rescue IOException
 		end
 	end
@@ -95,6 +116,9 @@ module FilesIO
 			out.write textPane.getContent
 
 			out.close
+
+			#the text file is no longer dirty!
+			textPane.resetEdited
 		rescue IOException
 		end
 	end
