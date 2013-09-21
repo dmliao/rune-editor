@@ -1,6 +1,6 @@
 include Java
-require '../java/flamingo-6.2.jar'
-require '../java/trident.jar'
+require_relative '../../java/flamingo-6.2.jar'
+require_relative '../../java/trident.jar'
 
 import org.pushingpixels.flamingo.api.ribbon.JRibbon
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand
@@ -47,7 +47,7 @@ class ToolbarRibbon < JRibbon
 	end
 
 	def createIcon filePath, w, h
-		imgFile = File.new filePath
+		imgFile = File.new(__FILE__ + '/../../' + filePath)
 		docImg = ImageIO.read imgFile
 		dims = Dimension.new w, h
 		return ImageWrapperResizableIcon.getIcon docImg, dims
@@ -113,24 +113,6 @@ class ToolbarRibbon < JRibbon
 
 		return saveFileButton
 	end
-
-	def configureApplicationMenu
-		begin
-			newImgFile = File.new "resources/new.png"
-			docNewImg = ImageIO.read newImgFile
-			dims = Dimension.new 32,32
-			newImgIcon = ImageWrapperResizableIcon.getIcon docNewImg, dims
-			entryNew = RibbonApplicationMenuEntryPrimary.new newImgIcon, "Create New Document", nil, JCommandButton::CommandButtonKind::ACTION_ONLY
-
-			applicationMenu = RibbonApplicationMenu.new
-			applicationMenu.addMenuEntry entryNew
-
-			self.setApplicationMenu applicationMenu
-		rescue IOException
-			puts "File not found!"
-		end
-	end
-
 end
 
 class NewFileClickAction

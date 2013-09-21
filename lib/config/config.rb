@@ -10,11 +10,13 @@ module Configuration
 
 	@prop = nil
 	@fos = nil
+	@filePath = nil
 
 	def initProperties
+		@filePath = __FILE__ + "/../../config.properties"
 		begin
 			@prop = Properties.new
-			@prop.load FileInputStream.new "config.properties"
+			@prop.load FileInputStream.new @filePath
 		rescue IOException
 			self.resetProperties
 		end
@@ -23,7 +25,7 @@ module Configuration
 	def resetProperties
 		@prop.setProperty "fontName","Alegreya"
 		@prop.setProperty "fontSize","18"
-		@fos = FileOutputStream.new "config.properties"
+		@fos = FileOutputStream.new @filePath
 		@prop.store @fos,nil
 	end
 
@@ -31,7 +33,7 @@ module Configuration
 		@prop.setProperty propertyKey,propertyValue
 		puts "SAVED PROPERTY"
 
-		@fos = FileOutputStream.new "config.properties"
+		@fos = FileOutputStream.new @filePath
 
 		@prop.store @fos,nil
 	end

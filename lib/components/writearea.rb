@@ -119,6 +119,7 @@ class WriteArea < JTextPane
 
 	def clearContent
 		self.setText ""
+		updateContent
 	end
 
 end

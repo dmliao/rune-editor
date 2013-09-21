@@ -16,11 +16,28 @@ module FilesIO
 	@openFile = nil
 
 	def createNewDocument textPane, frame
-		@openFile = nil
-		textPane.resetEdited
+		if textPane.getEdited == true
+			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm New", JOptionPane::YES_NO_CANCEL_OPTION
+			if (dialogResult == JOptionPane::YES_OPTION)
+				saved = saveDocument false, textPane, frame #Save the document first!
+				if saved == true
+					handleNewDocument textPane, frame
+				end
+			elsif (dialogResult == JOptionPane::NO_OPTION)
+				handleNewDocument textPane, frame
+			end
+		end
 
 	end
 
+	protected
+	def handleNewDocument textPane, frame
+		@openFile = nil
+		textPane.clearContent
+		textPane.resetEdited
+	end
+
+	protected
 	def handleOpenDocument textPane, frame
 		fileChooser = JFileChooser.new
 		returnVal = fileChooser.showOpenDialog frame
@@ -30,7 +47,10 @@ module FilesIO
 				readDocument file,textPane
 				@openFile = file
 			end
+		else
+			return false
 		end
+		return true
 	end
 
 	def openDocument textPane, frame
@@ -71,13 +91,15 @@ module FilesIO
 					end	
 				rescue IOException
 				end
+			else
+				return false
 			end
-
 		else
 			puts @openFile.getPath
 			puts textPane.getContent
 			writeDocument @openFile.getPath,textPane
 		end
+		return true
 	end
 
 	def getCurrentDocument
@@ -89,6 +111,7 @@ module FilesIO
 	end
 
 	##Helper function for opening
+	protected
 	def readDocument file, textPane
 		begin
 			fr = FileReader.new file
@@ -108,6 +131,7 @@ module FilesIO
 	end
 
 	##Helper function for saving documents
+	protected
 	def writeDocument filePath, textPane
 		begin
 			fw = FileOutputStream.new filePath

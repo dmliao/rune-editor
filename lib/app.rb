@@ -1,10 +1,10 @@
-require "config/config.rb"
-require "config/fonts.rb"
-require "config/textarea.rb"
-require "io/files.rb"
-require "components/writearea.rb"
-require "components/scrollbar.rb"
-require "components/ribbon.rb"
+require_relative "config/config.rb"
+require_relative "config/fonts.rb"
+require_relative "config/textarea.rb"
+require_relative "io/files.rb"
+require_relative "components/writearea.rb"
+require_relative "components/scrollbar.rb"
+require_relative "components/ribbon.rb"
 
 include Java
 include Configuration
@@ -27,6 +27,7 @@ import java.awt.BorderLayout
 
 import javax.swing.border.EmptyBorder
 
+# The main frame for the program, that holds all of the other components
 class App < JFrame
 
 	@mainPanel = nil
@@ -53,6 +54,9 @@ class App < JFrame
 		self.updateFooterPanel self.getCurrentDocument
 	end
 
+	# Initializes the GUI and layout of the entire application.
+	# Called when the program is initialized.
+	protected
 	def initGUI
 		self.setLookAndFeel
 		self.setPreferredSize Dimension.new 640, 480
@@ -84,12 +88,14 @@ class App < JFrame
 		
 	end
 
+	protected
 	def createHeaderPanel
 		headerPanel = JPanel.new
 		headerPanel.setOpaque false
 		return headerPanel
 	end
 
+	protected
 	def createFooterPanel
 		footerPanel = JPanel.new
 		footerPanel.setOpaque false
@@ -105,6 +111,7 @@ class App < JFrame
 		@footerText.setText footerText
 	end
 
+	protected
 	def createMainPanel
 		mainPanel = JPanel.new
 		box = BoxLayout.new mainPanel,BoxLayout::PAGE_AXIS
@@ -113,6 +120,7 @@ class App < JFrame
 		return mainPanel
 	end
 
+	protected
 	def createPage textPanel, scrollPanel
 
 		page = JPanel.new BorderLayout.new
@@ -126,7 +134,7 @@ class App < JFrame
 		
 	end
 
-
+	protected
 	def createScrollPanel textPanel
 		scrollPanel = RuneScrollPane.new textPanel
 		scrollPanel.setBorder nil
@@ -135,6 +143,7 @@ class App < JFrame
 		return scrollPanel
 	end
 
+	protected
 	def createTextPane
 		textPanel = WriteArea.new
 		textPanel.setOpaque false
