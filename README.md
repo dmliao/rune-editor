@@ -43,7 +43,7 @@ This project uses the (no longer updated) Flamingo JRibbon library, which has be
 
 The Flamingo library is licensed under the BSD-License, reproduced here:
 
-> Copyright (c) <YEAR>, <OWNER>
+> Copyright (c) 2005-2010 Flamingo Kirill Grouchnikov. All Rights Reserved.
 > All rights reserved.
 >
 > Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
