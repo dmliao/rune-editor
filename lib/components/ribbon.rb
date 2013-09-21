@@ -1,6 +1,7 @@
 include Java
 require_relative '../../java/flamingo-6.2.jar'
 require_relative '../../java/trident.jar'
+require_relative '../actions/fileactions.rb'
 
 import org.pushingpixels.flamingo.api.ribbon.JRibbon
 import org.pushingpixels.flamingo.api.ribbon.JRibbonBand
@@ -55,8 +56,7 @@ class ToolbarRibbon < JRibbon
 		fileBand.addCommandButton addNewFileButton, RibbonElementPriority::TOP
 		fileBand.addCommandButton addOpenFileButton, RibbonElementPriority::TOP
 		fileBand.addCommandButton addSaveFileButton, RibbonElementPriority::TOP
-		fileBand.addCommandButton addSaveAsFileButton, RibbonElementPriority::TOP
-
+		
 		coreResizePolicy = CoreRibbonResizePolicies.getCorePoliciesRestrictive fileBand
 		irbrList = ArrayList.new
 
@@ -85,7 +85,7 @@ class ToolbarRibbon < JRibbon
 		clickAction = NewFileClickAction.new @contentPane, @frame
 
 		newFileButton.addActionListener clickAction
-
+		
 		return newFileButton
 	end
 
@@ -119,52 +119,5 @@ class ToolbarRibbon < JRibbon
 		saveAsFileButton.addActionListener clickAction
 
 		return saveAsFileButton
-	end
-end
-
-class NewFileClickAction
-	include java.awt.event.ActionListener
-
-	@cp = nil
-	@f = nil
-
-	def initialize cp, f
-		@cp = cp
-		@f = f
-	end
-
-	def actionPerformed evt
-		@frame.createNewDocument @cp, @f
-	end
-end
-
-class OpenFileClickAction
-	include java.awt.event.ActionListener
-
-	@cp = nil
-	@f = nil
-	def initialize cp, f
-		@cp = cp
-		@f = f
-	end
-
-	def actionPerformed evt
-		@frame.openDocument @cp, @f
-	end
-end
-class SaveFileClickAction
-	include java.awt.event.ActionListener
-
-	@cp = nil
-	@f = nil
-	@saveAs = nil
-	def initialize saveAs, cp, f
-		@cp = cp
-		@f = f
-		@saveAs = saveAs
-	end
-
-	def actionPerformed evt
-		@frame.saveDocument @saveAs, @cp, @f
 	end
 end

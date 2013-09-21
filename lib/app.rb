@@ -2,9 +2,11 @@ require_relative "config/config.rb"
 require_relative "config/fonts.rb"
 require_relative "config/textarea.rb"
 require_relative "io/files.rb"
+require_relative "components/menubar.rb"
 require_relative "components/writearea.rb"
 require_relative "components/scrollbar.rb"
 require_relative "components/ribbon.rb"
+
 
 include Java
 include Configuration
@@ -43,6 +45,8 @@ class App < JFrame
 
 	@footerText = nil
 
+	@keybindBar = nil
+
 	# Initializes the main frame.
 	def initialize
 		super "Rune Editor"
@@ -50,10 +54,9 @@ class App < JFrame
 		self.initGUI
 		self.initProperties
 		self.updateConfigs
-
 		self.pack
-
 		self.updateFooterPanel self.getCurrentDocument
+		@textPanel.resetEdited #start out with a blank textpane
 	end
 
 	# Initializes the GUI and layout of the entire application.
@@ -82,6 +85,11 @@ class App < JFrame
 
 		self.setVisible true
 		@textPanel.resetEdited
+
+		@keybindBar = WriteMenuBar.new
+		@keybindBar.setDependents @textPanel, self
+		@keybindBar.createMenu
+		self.setJMenuBar @keybindBar
 
 	end
 
