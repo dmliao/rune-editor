@@ -28,6 +28,7 @@ import java.awt.BorderLayout
 import javax.swing.border.EmptyBorder
 
 # The main frame for the program, that holds all of the other components
+# This is the program we want to run for now!
 class App < JFrame
 
 	@mainPanel = nil
@@ -42,8 +43,9 @@ class App < JFrame
 
 	@footerText = nil
 
+	# Initializes the main frame.
 	def initialize
-		super "Rune Desktop Writer"
+		super "Rune Editor"
 
 		self.initGUI
 		self.initProperties
@@ -83,8 +85,10 @@ class App < JFrame
 
 	end
 
+	# sets the look and feel of the app. All other global look and feel rules go here.
+	protected
 	def setLookAndFeel
-		# UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 		
 	end
 
@@ -107,8 +111,16 @@ class App < JFrame
 		return footerPanel
 	end
 
+	# Updates the footer text. Used to provide extra information in the footer.
+	# +footerText+ - the text that should be displayed in the footer.
 	def updateFooterPanel footerText
 		@footerText.setText footerText
+	end
+
+	# Function to get the current footer text
+	# +return+ - String, the footer text
+	def getFooterText
+		return @footerText.getText
 	end
 
 	protected
@@ -153,6 +165,7 @@ class App < JFrame
 	end
 
 
+	# Method to update the entire app based on the configurations file
 	def updateConfigs
 		updateTextBoxFont @textPanel
 		updateTextAreaBoundaries @textPanel, @headerPanel, @footerPanel

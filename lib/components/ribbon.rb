@@ -21,9 +21,9 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu
 
 class ToolbarRibbon < JRibbon
 
-	@fileTasks = nil
-	@contentPane = nil #the textpane that the UI will interface with
-	@frame = nil #the containing frame
+	@fileTasks = nil # taskbar with all file functions
+	@contentPane = nil # the textpane that the UI will interface with
+	@frame = nil # the containing frame
 	
 	def initialize
 		super
@@ -33,17 +33,12 @@ class ToolbarRibbon < JRibbon
 	def setDependents contentPane, frame
 		@contentPane = contentPane
 		@frame = frame
-
-		puts "Dependents set"
-
 	end
 
 	def createTasks
 		@fileTasks = createFileTasks
 		
 		self.addTask @fileTasks
-
-		# configureApplicationMenu
 	end
 
 	def createIcon filePath, w, h
@@ -60,8 +55,9 @@ class ToolbarRibbon < JRibbon
 		fileBand.addCommandButton addNewFileButton, RibbonElementPriority::TOP
 		fileBand.addCommandButton addOpenFileButton, RibbonElementPriority::TOP
 		fileBand.addCommandButton addSaveFileButton, RibbonElementPriority::TOP
+		fileBand.addCommandButton addSaveAsFileButton, RibbonElementPriority::TOP
 
-		coreResizePolicy = CoreRibbonResizePolicies.getCorePoliciesNone fileBand
+		coreResizePolicy = CoreRibbonResizePolicies.getCorePoliciesRestrictive fileBand
 		irbrList = ArrayList.new
 
 		irbrList.addAll coreResizePolicy
@@ -107,11 +103,22 @@ class ToolbarRibbon < JRibbon
 		saveImgIcon = createIcon "resources/save.png", 32, 32
 		saveFileButton = JCommandButton.new "Save", saveImgIcon
 
-		clickAction = SaveFileClickAction.new @contentPane, @frame
+		clickAction = SaveFileClickAction.new false, @contentPane, @frame
 
 		saveFileButton.addActionListener clickAction
 
 		return saveFileButton
+	end
+
+	def addSaveAsFileButton
+		saveAsImgIcon = createIcon "resources/save.png", 32, 32
+		saveAsFileButton = JCommandButton.new "Save As", saveAsImgIcon
+
+		clickAction = SaveFileClickAction.new true, @contentPane, @frame
+
+		saveAsFileButton.addActionListener clickAction
+
+		return saveAsFileButton
 	end
 end
 
@@ -150,12 +157,14 @@ class SaveFileClickAction
 
 	@cp = nil
 	@f = nil
-	def initialize cp, f
+	@saveAs = nil
+	def initialize saveAs, cp, f
 		@cp = cp
 		@f = f
+		@saveAs = saveAs
 	end
 
 	def actionPerformed evt
-		@frame.saveDocument false, @cp, @f
+		@frame.saveDocument @saveAs, @cp, @f
 	end
 end

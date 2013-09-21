@@ -31,6 +31,7 @@ This may change in future updates.
 
 ### Future Plans
 
+* Autosaving and version control?
 * Settings pane to change the config file in the program
 * Using PanDoc (or other converter) to export RTF files
 * Find / Replace

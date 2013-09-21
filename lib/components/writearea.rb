@@ -1,5 +1,8 @@
 include Java
 require 'java'
+require_relative "../text/undo.rb"
+
+include UndoRedo
 
 import javax.swing.JTextPane
 import java.awt.Color
@@ -207,7 +210,7 @@ class SimpleDocumentListener
 	end
 
 	def changedUpdate(event)
-		#behavior.call event; 
+		behavior.call event; 
 	end
 	def insertUpdate(event)  
 		behavior.call event; 

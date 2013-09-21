@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter
 import java.io.FileOutputStream
 import java.lang.System
 
+#Self-contained module for all file operations
 module FilesIO
 	@openFile = nil
 
@@ -57,8 +58,8 @@ module FilesIO
 		if textPane.getEdited == true
 			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm Open", JOptionPane::YES_NO_OPTION
 			if (dialogResult == JOptionPane::YES_OPTION)
-				saveDocument false, textPane, frame #Save the document first!
-				handleOpenDocument textPane, frame #recursively open another document!
+				saveDocument false, textPane, frame # Save the document first!
+				handleOpenDocument textPane, frame # recursively open another document!
 			else	
 				handleOpenDocument textPane, frame
 			end
@@ -110,7 +111,8 @@ module FilesIO
 		end
 	end
 
-	##Helper function for opening
+	# Helper function for opening files
+	# Reads the document in the given file, and outputs the result to a textpane
 	protected
 	def readDocument file, textPane
 		begin
@@ -130,7 +132,8 @@ module FilesIO
 		end
 	end
 
-	##Helper function for saving documents
+	# Helper function for saving documents
+	# Writes the text from the textpane into a given file path
 	protected
 	def writeDocument filePath, textPane
 		begin
