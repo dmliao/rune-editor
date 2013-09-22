@@ -23,11 +23,9 @@ This may change in future updates.
 
 ### Immediate Plans
 
-* (Belatedly) figure out unit testing
 * Markdown implementation
 * Word Count
 * Undo / Redo
-* Keybindings for keyboard shortcuts
 
 ### Future Plans
 
