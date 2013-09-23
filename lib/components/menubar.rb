@@ -67,6 +67,18 @@ class WriteMenuBar < JMenuBar
 	def createEditMenu
 		editMenu = JMenu.new "Edit"
 
+		undoMenuItem = JMenuItem.new "Undo"
+		undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_Z,ActionEvent::CTRL_MASK))
+		undoMenuItem.addActionListener(@contentPane.getUndoAction)
+
+		editMenu.add undoMenuItem
+
+		redoMenuItem = JMenuItem.new "Redo"
+		redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_Y,ActionEvent::CTRL_MASK))
+		redoMenuItem.addActionListener(@contentPane.getRedoAction)
+
+		editMenu.add redoMenuItem
+
 		return editMenu
 	end
 

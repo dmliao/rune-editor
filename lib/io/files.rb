@@ -36,6 +36,7 @@ module FilesIO
 		@openFile = nil
 		textPane.clearContent
 		textPane.resetEdited
+		textPane.resetUndoRedo
 	end
 
 	protected
@@ -47,6 +48,7 @@ module FilesIO
 			begin
 				readDocument file,textPane
 				@openFile = file
+				textPane.resetUndoRedo
 			end
 		else
 			return false
@@ -146,6 +148,8 @@ module FilesIO
 
 			#the text file is no longer dirty!
 			textPane.resetEdited
+
+			textPane.resetUndoRedo
 		rescue IOException
 		end
 	end

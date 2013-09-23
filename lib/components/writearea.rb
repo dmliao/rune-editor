@@ -55,6 +55,8 @@ class WriteArea < JTextPane
 		end
 		self.getDocument.addDocumentListener docListener
 
+		self.initUndoRedo self
+
 		resetEdited
 
 	end
