@@ -22,7 +22,10 @@ import org.pushingpixels.flamingo.api.ribbon.RibbonApplicationMenu
 
 class ToolbarRibbon < JRibbon
 
+	@homeTasks = nil # a band with the file and edit functions
+
 	@fileTasks = nil # taskbar with all file functions
+	@editTasks = nil # taskbar with all edit functions
 	@contentPane = nil # the textpane that the UI will interface with
 	@frame = nil # the containing frame
 	
@@ -38,8 +41,11 @@ class ToolbarRibbon < JRibbon
 
 	def createTasks
 		@fileTasks = createFileTasks
+		@editTasks = createEditTasks
+
+		@homeTasks = RibbonTask.new "Home", @fileTasks, @editTasks
 		
-		self.addTask @fileTasks
+		self.addTask @homeTasks
 	end
 
 	def createIcon filePath, w, h
@@ -69,15 +75,34 @@ class ToolbarRibbon < JRibbon
 
 		puts irbrList
 		
-		#coreResizePolicy.addAll irbrList
 		fileBand.setResizePolicies irbrList
 
-		fileTasks = RibbonTask.new "Home", fileBand
-
-
-		return fileTasks
+		return fileBand
 	end
 
+	def createEditTasks
+
+		editBand = JRibbonBand.new "Edit", nil
+
+		editBand.addCommandButton addUndoButton, RibbonElementPriority::TOP
+		editBand.addCommandButton addRedoButton, RibbonElementPriority::TOP
+
+		coreResizePolicy = CoreRibbonResizePolicies.getCorePoliciesNone editBand
+		irbrList = ArrayList.new
+
+		irbrList.addAll coreResizePolicy
+
+		irbrList.remove irbrList.size-1
+
+		irbr = IconRibbonBandResizePolicy.new editBand.getControlPanel
+		irbrList.add irbr
+
+		puts irbrList
+		
+		editBand.setResizePolicies irbrList
+
+		return editBand
+	end
 	def addNewFileButton
 		newImgIcon = createIcon "resources/new.png", 32, 32
 		newFileButton = JCommandButton.new "New", newImgIcon
@@ -119,5 +144,27 @@ class ToolbarRibbon < JRibbon
 		saveAsFileButton.addActionListener clickAction
 
 		return saveAsFileButton
+	end
+
+	def addUndoButton
+		imgIcon = createIcon "resources/save.png", 32, 32
+		button = JCommandButton.new "Undo", nil
+
+		clickAction = @contentPane.getUndoAction
+
+		button.addActionListener clickAction
+
+		return button
+	end
+
+	def addRedoButton
+		imgIcon = createIcon "resources/save.png", 32, 32
+		button = JCommandButton.new "Redo", nil
+
+		clickAction = @contentPane.getRedoAction
+
+		button.addActionListener clickAction
+
+		return button
 	end
 end
