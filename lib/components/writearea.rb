@@ -51,7 +51,6 @@ class WriteArea < JTextPane
 
 		docListener = SimpleDocumentListener.new do
 			@edited = true
-			puts "Edited"
 		end
 		self.getDocument.addDocumentListener docListener
 
@@ -90,6 +89,11 @@ class WriteArea < JTextPane
 		self.setParagraphAttributes set, false
 	end
 
+	def getCount
+		updateContent
+		string = @content 
+    	return (0..(string.length-1)).inject(1){|m,e| m += string[e].chr == ' ' ? 1 : 0 }
+	end
 
 	def paintComponent g
 		g.setColor getBackground

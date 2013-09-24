@@ -2,6 +2,7 @@ require_relative "config/config.rb"
 require_relative "config/fonts.rb"
 require_relative "config/textarea.rb"
 require_relative "io/files.rb"
+require_relative "text/footer.rb"
 require_relative "components/menubar.rb"
 require_relative "components/writearea.rb"
 require_relative "components/scrollbar.rb"
@@ -11,6 +12,7 @@ require_relative "components/ribbon.rb"
 include Java
 include Configuration
 include FilesIO
+include FooterUpdater
 
 import java.awt.Dimension
 import java.awt.Color
@@ -91,6 +93,8 @@ class App < JFrame
 		@keybindBar.createMenu
 		self.setJMenuBar @keybindBar
 
+		self.updateFooter
+
 	end
 
 	# sets the look and feel of the app. All other global look and feel rules go here.
@@ -121,6 +125,7 @@ class App < JFrame
 
 	# Updates the footer text. Used to provide extra information in the footer.
 	# +footerText+ - the text that should be displayed in the footer.
+	public
 	def updateFooterPanel footerText
 		@footerText.setText footerText
 	end

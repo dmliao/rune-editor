@@ -20,12 +20,12 @@ This may change in future updates.
 * New, Open, and Save documents
 * External config file to set the text editor's styles
 * Uses Flamingo's JRibbon to create a top ribbon interface
+* Undo / Redo
 
 ### Immediate Plans
 
 * Markdown implementation
 * Word Count
-* Undo / Redo
 
 ### Future Plans
 
@@ -44,3 +44,5 @@ This project uses the (no longer updated) Flamingo JRibbon library, which has be
 * JTextPane makes long uninterrupted strings create a horizontal scrollbar.
 * HTMLText doesn't support line-height. Until then, I'll have to use plaintext, so no syntax highlighting.
 * Sometimes when opening files, words get cut off until window resize or editing
+* Word Count is creating ghost images.
+* When app is initialized, there are ghost images of the UI in the textpane
