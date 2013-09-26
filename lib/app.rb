@@ -2,7 +2,9 @@ require_relative "config/config.rb"
 require_relative "config/fonts.rb"
 require_relative "config/textarea.rb"
 require_relative "io/files.rb"
-require_relative "text/footer.rb"
+require_relative "text/footertext.rb"
+require_relative "components/transpanel.rb"
+require_relative "components/transparentlabel.rb"
 require_relative "components/menubar.rb"
 require_relative "components/writearea.rb"
 require_relative "components/scrollbar.rb"
@@ -56,9 +58,11 @@ class App < JFrame
 		self.initGUI
 		self.initProperties
 		self.updateConfigs
+		self.resetOpenFile
 		self.pack
-		self.updateFooterPanel self.getCurrentDocument
 		@textPanel.resetEdited #start out with a blank textpane
+
+		STDERR.puts @openFileName.inspect
 	end
 
 	# Initializes the GUI and layout of the entire application.
@@ -94,7 +98,6 @@ class App < JFrame
 		self.setJMenuBar @keybindBar
 
 		self.updateFooter
-
 	end
 
 	# sets the look and feel of the app. All other global look and feel rules go here.
@@ -102,6 +105,11 @@ class App < JFrame
 	def setLookAndFeel
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 		
+	end
+
+	public
+	def getCurrentDocument
+		return FilesIO.openFileName
 	end
 
 	protected
@@ -113,12 +121,16 @@ class App < JFrame
 
 	protected
 	def createFooterPanel
-		footerPanel = JPanel.new
-		footerPanel.setOpaque false
+		footerPanel = TranslucentPanel.new
 		
-		@footerText = JLabel.new "Footer Text Here!"
+		@footerText = TransparentLabel.new "Footer Text Here!"
+		@footerText.setOpaque false
+
 		footerPanel.setBorder EmptyBorder.new 0, 0, 0, 0
+		footerPanel.setBackground Color.new 0,0,0,0
 		footerPanel.add @footerText
+
+		@footerText.setBackground Color.new 0,0,0,0
 
 		return footerPanel
 	end
@@ -128,6 +140,14 @@ class App < JFrame
 	public
 	def updateFooterPanel footerText
 		@footerText.setText footerText
+	end
+
+	def getFooterPanel
+		return @footerPanel
+	end
+
+	def getFooterLabel
+		return @footerText
 	end
 
 	# Function to get the current footer text
@@ -143,6 +163,11 @@ class App < JFrame
 		mainPanel.setLayout box
 
 		return mainPanel
+	end
+
+	public
+	def getMainPanel
+		return @mainPanel
 	end
 
 	protected

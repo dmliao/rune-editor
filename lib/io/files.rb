@@ -16,6 +16,11 @@ import java.lang.System
 module FilesIO
 	@openFile = nil
 
+	module_function
+	  def openFileName; @openFileName end
+	  def openFileName= v; @openFileName = v end
+
+	public
 	def createNewDocument textPane, frame
 		if textPane.getEdited == true
 			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm New", JOptionPane::YES_NO_CANCEL_OPTION
@@ -27,16 +32,30 @@ module FilesIO
 			elsif (dialogResult == JOptionPane::NO_OPTION)
 				handleNewDocument textPane, frame
 			end
+		else
+			handleNewDocument textPane, frame
 		end
 
 	end
 
 	protected
 	def handleNewDocument textPane, frame
-		@openFile = nil
+		resetOpenFile
 		textPane.clearContent
 		textPane.resetEdited
 		textPane.resetUndoRedo
+	end
+
+	def resetOpenFile
+		puts "Resets file"
+		@openFile = nil
+		FilesIO.openFileName = "Untitled"
+	end
+
+	def setOpenFile file
+		puts "Opening file"
+		FilesIO.openFileName = file.getName
+		@openFile = file
 	end
 
 	protected
@@ -47,7 +66,7 @@ module FilesIO
 			file = fileChooser.getSelectedFile
 			begin
 				readDocument file,textPane
-				@openFile = file
+				setOpenFile file
 				textPane.resetUndoRedo
 			end
 		else
@@ -56,6 +75,7 @@ module FilesIO
 		return true
 	end
 
+	public
 	def openDocument textPane, frame
 		if textPane.getEdited == true
 			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm Open", JOptionPane::YES_NO_OPTION
@@ -86,11 +106,11 @@ module FilesIO
 						dialogResult = JOptionPane.showConfirmDialog frame, "Overwrite existing file?","Overwrite",JOptionPane::YES_NO_OPTION
 						if (dialogResult == JOptionPane::YES_OPTION)
 							writeDocument file.getPath,textPane
-							@openFile = file
+							setOpenFile file
 						end
 					else
 						writeDocument file.getPath,textPane
-						@openFile = file
+						setOpenFile file
 					end	
 				rescue IOException
 				end
@@ -103,14 +123,6 @@ module FilesIO
 			writeDocument @openFile.getPath,textPane
 		end
 		return true
-	end
-
-	def getCurrentDocument
-		if (@openFile != nil)
-			return @openFile.getName
-		else
-			return ""
-		end
 	end
 
 	# Helper function for opening files

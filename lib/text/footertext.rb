@@ -23,4 +23,8 @@ module FooterUpdater
 		iMap.put(KeyStroke.getKeyStroke(KeyEvent::VK_SPACE, 0), updater)
 		aMap.put(updater, @footerAction)
 	end
+
+	def updateFooterWCText
+		updateFooterPanel(getCurrentDocument + " | Word Count: " + @textPanel.getCount.to_s)
+	end
 end
