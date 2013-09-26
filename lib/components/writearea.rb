@@ -92,7 +92,11 @@ class WriteArea < JTextPane
 	def getCount
 		updateContent
 		string = @content 
-    	return (0..(string.length-1)).inject(1){|m,e| m += string[e].chr == ' ' ? 1 : 0 }
+    	
+		s = string
+	    s.gsub!(/\w+/, 'X')
+	    s.gsub!(/\W+/, '')
+	    return s.length
 	end
 
 	def paintComponent g
