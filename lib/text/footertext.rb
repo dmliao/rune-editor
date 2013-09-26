@@ -24,7 +24,4 @@ module FooterUpdater
 		aMap.put(updater, @footerAction)
 	end
 
-	def updateFooterWCText
-		updateFooterPanel(getCurrentDocument + " | Word Count: " + @textPanel.getCount.to_s)
-	end
 end

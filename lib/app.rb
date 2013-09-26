@@ -204,6 +204,7 @@ class App < JFrame
 
 
 	# Method to update the entire app based on the configurations file
+	public
 	def updateConfigs
 		updateTextBoxFont @textPanel
 		updateTextAreaBoundaries @textPanel, @headerPanel, @footerPanel
@@ -211,6 +212,10 @@ class App < JFrame
 		updateTextAreaColor @scrollPanel
 		updateTextAreaColor @textPanel
 		updateTextAreaColor @scrollPanel.getVerticalScrollBar
+	end
+
+	def updateFooterWCText
+		updateFooterPanel(getCurrentDocument + " | Word Count: " + @textPanel.getCount.to_s)
 	end
 
 end
