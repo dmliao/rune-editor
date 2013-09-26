@@ -50,14 +50,12 @@ module FilesIO
 		puts "Resets file"
 		@openFile = nil
 		FilesIO.openFileName = "Untitled"
-		self.updateFooterWCText
 	end
 
 	def setOpenFile file
 		puts "Opening file"
 		FilesIO.openFileName = file.getName
 		@openFile = file
-		updateFooterWCText
 	end
 
 	protected
@@ -90,7 +88,6 @@ module FilesIO
 		else
 			handleOpenDocument textPane, frame
 		end
-		updateFooterWCText
 	end
 
 	def saveDocument saveAs, textPane, frame

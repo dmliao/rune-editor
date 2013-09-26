@@ -65,6 +65,8 @@ class App < JFrame
 		self.pack
 		@textPanel.resetEdited #start out with a blank textpane
 
+		self.updateFooterWCText
+
 		# FIXME: Hack to get word count to update all the time
 		# Find a way to do better!
 		Thread.new do
@@ -160,6 +162,10 @@ class App < JFrame
 
 	def getFooterLabel
 		return @footerText
+	end
+
+	def getRibbon
+		return @ribbon
 	end
 
 	# Function to get the current footer text

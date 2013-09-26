@@ -1,6 +1,7 @@
 include Java
 
 require_relative '../actions/fileactions.rb'
+require_relative '../actions/uiactions.rb'
 
 import javax.swing.JMenu
 import javax.swing.JMenuItem
@@ -18,6 +19,7 @@ class WriteMenuBar < JMenuBar
 	@fileMenu = nil
 	@exportMenu = nil
 	@editMenu = nil
+	@viewMenu = nil
 
 	@contentPane = nil
 	@frame = nil
@@ -37,52 +39,27 @@ class WriteMenuBar < JMenuBar
 		self.add @fileMenu
 		@editMenu = createEditMenu
 		self.add @editMenu
+		@viewMenu = createViewMenu
+		self.add @viewMenu
 
 	end
 
 	protected
-	def createNewMenuItem
-		fileMenuItem = JMenuItem.new "New Document"
-		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_N,ActionEvent::CTRL_MASK))
-		fileMenuItem.addActionListener(NewFileClickAction.new(@contentPane, @frame))
+	def createMenuItem text, accelerator, actionlistener
+		menuItem = JMenuItem.new text
+		menuItem.setAccelerator(accelerator)
+		menuItem.addActionListener(actionlistener)
 
-		return fileMenuItem
-	end
-
-	protected
-	def createOpenMenuItem
-		fileMenuItem = JMenuItem.new "Open Document"
-		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_O,ActionEvent::CTRL_MASK))
-		fileMenuItem.addActionListener(OpenFileClickAction.new(@contentPane, @frame))
-
-		return fileMenuItem
-	end
-
-	protected
-	def createSaveMenuItem
-		fileMenuItem = JMenuItem.new "Save Document"
-		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK))
-		fileMenuItem.addActionListener(SaveFileClickAction.new(false,@contentPane, @frame))
-
-		return fileMenuItem
-	end
-
-	protected
-	def createVersionMenuItem
-		fileMenuItem = JMenuItem.new "Save New Version"
-		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK))
-		fileMenuItem.addActionListener(SaveVersionClickAction.new(@contentPane, @frame))
-
-		return fileMenuItem
+		return menuItem
 	end
 
 	def createFileMenu
 		fileMenu = JMenu.new "File"
 
-		fileMenu.add createNewMenuItem
-		fileMenu.add createOpenMenuItem
-		fileMenu.add createSaveMenuItem
-		fileMenu.add createVersionMenuItem
+		fileMenu.add createMenuItem("New", KeyStroke.getKeyStroke(KeyEvent::VK_N,ActionEvent::CTRL_MASK), NewFileClickAction.new(@contentPane, @frame))
+		fileMenu.add createMenuItem("Open", KeyStroke.getKeyStroke(KeyEvent::VK_O,ActionEvent::CTRL_MASK), OpenFileClickAction.new(@contentPane, @frame))
+		fileMenu.add createMenuItem("Save", KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK), SaveFileClickAction.new(false,@contentPane, @frame))
+		fileMenu.add createMenuItem("Save New Version",KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK),SaveVersionClickAction.new(@contentPane, @frame))
 
 		return fileMenu
 	end
@@ -90,19 +67,19 @@ class WriteMenuBar < JMenuBar
 	def createEditMenu
 		editMenu = JMenu.new "Edit"
 
-		undoMenuItem = JMenuItem.new "Undo"
-		undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_Z,ActionEvent::CTRL_MASK))
-		undoMenuItem.addActionListener(@contentPane.getUndoAction)
-
-		editMenu.add undoMenuItem
-
-		redoMenuItem = JMenuItem.new "Redo"
-		redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_Y,ActionEvent::CTRL_MASK))
-		redoMenuItem.addActionListener(@contentPane.getRedoAction)
-
-		editMenu.add redoMenuItem
+		editMenu.add createMenuItem("Undo", KeyStroke.getKeyStroke(KeyEvent::VK_Z,ActionEvent::CTRL_MASK), @contentPane.getUndoAction)
+		editMenu.add createMenuItem("Redo", KeyStroke.getKeyStroke(KeyEvent::VK_Y,ActionEvent::CTRL_MASK), @contentPane.getRedoAction)
 
 		return editMenu
 	end
+
+	def createViewMenu
+		viewMenu = JMenu.new "View"
+
+		viewMenu.add createMenuItem("Show/Hide Ribbon", KeyStroke.getKeyStroke(KeyEvent::VK_H,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), HideShowComponentAction.new(@frame.getRibbon,@frame))
+
+		return viewMenu
+	end
+
 
 end
