@@ -16,9 +16,7 @@ class UpdateFooterWordCountAction < AbstractAction
 	def actionPerformed evt
 		puts @textPane.getCount
 		@frame.updateFooterWCText
-		# Hack to get everything to avoid having artifacts...not the best solution, but it works for now.
-		# FIXME: Find a more efficient solution to avoid ghosting images on text update!
-		@frame.repaint
+		
 	end
 
 end

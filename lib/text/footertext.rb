@@ -9,7 +9,7 @@ import javax.swing.JComponent
 module FooterUpdater
 
 	@footerAction = nil
-	def updateFooter
+	def updateFooterInit
 		@footerAction = UpdateFooterWordCountAction.new
 		@footerAction.setDependents self,@textPanel
 

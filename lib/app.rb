@@ -62,7 +62,15 @@ class App < JFrame
 		self.pack
 		@textPanel.resetEdited #start out with a blank textpane
 
-		STDERR.puts @openFileName.inspect
+		# FIXME: Hack to get word count to update all the time
+		# Find a way to do better!
+		Thread.new do
+			while true do
+				self.updateFooterWCText
+				sleep 2
+			end
+		end
+
 	end
 
 	# Initializes the GUI and layout of the entire application.
@@ -97,7 +105,8 @@ class App < JFrame
 		@keybindBar.createMenu
 		self.setJMenuBar @keybindBar
 
-		self.updateFooter
+		self.updateFooterInit # bind word count events!
+
 	end
 
 	# sets the look and feel of the app. All other global look and feel rules go here.
@@ -216,6 +225,9 @@ class App < JFrame
 
 	def updateFooterWCText
 		updateFooterPanel(getCurrentDocument + " | Word Count: " + @textPanel.getCount.to_s)
+		# Hack to get everything to avoid having artifacts...not the best solution, but it works for now.
+		# FIXME: Find a more efficient solution to avoid ghosting images on text update!
+		self.repaint
 	end
 
 end
