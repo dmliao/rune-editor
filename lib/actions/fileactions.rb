@@ -45,3 +45,17 @@ class SaveFileClickAction
 		@frame.saveDocument @saveAs, @cp, @f
 	end
 end
+class SaveVersionClickAction
+	include java.awt.event.ActionListener
+
+	@cp = nil
+	@f = nil
+	def initialize cp, f
+		@cp = cp
+		@f = f
+	end
+
+	def actionPerformed evt
+		@frame.saveDraft @cp, @f
+	end
+end

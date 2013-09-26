@@ -24,7 +24,7 @@ class WriteMenuBar < JMenuBar
 
 	def initialize
 		super
-		setPreferredSize Dimension.new 0,0
+		# setPreferredSize Dimension.new 0,0
 	end
 
 	def setDependents contentPane, frame
@@ -40,26 +40,49 @@ class WriteMenuBar < JMenuBar
 
 	end
 
+	protected
+	def createNewMenuItem
+		fileMenuItem = JMenuItem.new "New Document"
+		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_N,ActionEvent::CTRL_MASK))
+		fileMenuItem.addActionListener(NewFileClickAction.new(@contentPane, @frame))
+
+		return fileMenuItem
+	end
+
+	protected
+	def createOpenMenuItem
+		fileMenuItem = JMenuItem.new "Open Document"
+		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_O,ActionEvent::CTRL_MASK))
+		fileMenuItem.addActionListener(OpenFileClickAction.new(@contentPane, @frame))
+
+		return fileMenuItem
+	end
+
+	protected
+	def createSaveMenuItem
+		fileMenuItem = JMenuItem.new "Save Document"
+		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK))
+		fileMenuItem.addActionListener(SaveFileClickAction.new(false,@contentPane, @frame))
+
+		return fileMenuItem
+	end
+
+	protected
+	def createVersionMenuItem
+		fileMenuItem = JMenuItem.new "Save New Version"
+		fileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK))
+		fileMenuItem.addActionListener(SaveVersionClickAction.new(@contentPane, @frame))
+
+		return fileMenuItem
+	end
+
 	def createFileMenu
 		fileMenu = JMenu.new "File"
 
-		newFileMenuItem = JMenuItem.new "New Document"
-		newFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_N,ActionEvent::CTRL_MASK))
-		newFileMenuItem.addActionListener(NewFileClickAction.new(@contentPane, @frame))
-
-		fileMenu.add newFileMenuItem
-
-		openFileMenuItem = JMenuItem.new "Open Document"
-		openFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_O,ActionEvent::CTRL_MASK))
-		openFileMenuItem.addActionListener(OpenFileClickAction.new(@contentPane, @frame))
-		
-		fileMenu.add openFileMenuItem
-
-		saveFileMenuItem = JMenuItem.new "Save Document"
-		saveFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK))
-		saveFileMenuItem.addActionListener(SaveFileClickAction.new(false,@contentPane, @frame))
-		
-		fileMenu.add saveFileMenuItem
+		fileMenu.add createNewMenuItem
+		fileMenu.add createOpenMenuItem
+		fileMenu.add createSaveMenuItem
+		fileMenu.add createVersionMenuItem
 
 		return fileMenu
 	end

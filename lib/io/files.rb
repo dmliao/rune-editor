@@ -17,8 +17,8 @@ module FilesIO
 	@openFile = nil
 
 	module_function
-	  def openFileName; @openFileName end
-	  def openFileName= v; @openFileName = v end
+	def openFileName; @openFileName end
+	def openFileName= v; @openFileName = v end
 
 	public
 	def createNewDocument textPane, frame
@@ -124,6 +124,40 @@ module FilesIO
 			puts @openFile.getPath
 			puts textPane.getContent
 			writeDocument @openFile.getPath,textPane
+		end
+		return true
+	end
+
+	# Save a new version of the document in the given File object
+	def saveNewVersion newFile, textPane, frame
+
+		textPane.updateContent
+		if @openFile == nil
+
+			fileChooser = JFileChooser.new
+			returnVal = fileChooser.showSaveDialog frame
+			if returnVal == JFileChooser::APPROVE_OPTION
+				out = nil
+				begin
+					file = fileChooser.getSelectedFile
+
+					if file.isFile
+						dialogResult = JOptionPane.showConfirmDialog frame, "Overwrite existing file?","Overwrite",JOptionPane::YES_NO_OPTION
+						if (dialogResult == JOptionPane::YES_OPTION)
+							writeDocument file.getPath,textPane
+							setOpenFile file
+						end
+					else
+						writeDocument file.getPath,textPane
+						setOpenFile file
+					end	
+				rescue IOException
+				end
+			else
+				return false
+			end
+		else
+			writeDocument newFile.getPath,textPane
 		end
 		return true
 	end
