@@ -2,6 +2,7 @@ include Java
 
 require_relative '../actions/fileactions.rb'
 require_relative '../actions/uiactions.rb'
+require_relative '../actions/windowactions.rb'
 
 import javax.swing.JMenu
 import javax.swing.JMenuItem
@@ -77,6 +78,7 @@ class WriteMenuBar < JMenuBar
 		viewMenu = JMenu.new "View"
 
 		viewMenu.add createMenuItem("Show/Hide Ribbon", KeyStroke.getKeyStroke(KeyEvent::VK_H,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), HideShowComponentAction.new(@frame.getRibbon,@frame))
+		viewMenu.add createMenuItem("Versions", KeyStroke.getKeyStroke(KeyEvent::VK_V,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), ShowVersionsAction.new(@frame))
 
 		return viewMenu
 	end

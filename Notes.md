@@ -1,13 +1,4 @@
-# Current Dev Plans:
-
-Implement Autosaving:
-
-## Save New Version method:
-
-* allow users to save files as new version, and continue editing the original version
-* Save new version - Ctrl-Shift-N
-* set up autosaving, allow users to autosave every few minutes
-* Create a viewer window to compare all of the versions in the same folder (eventually)
+# Current Dev Plans: (very fluid and changeable)
 
 Begin implementing a config settings window:
 
@@ -17,3 +8,13 @@ Window with several panels:
 Text / Layout / Background / Save&Load
 
 Also allow for separate config profiles, save and load .properties files :3
+
+Implement a Version Viewer that grabs all of the version files and lists them side by side (like draft)
+Uses a horizontal scrollbar
+
+Background images + music
+
+Use toolbars for UI instead of ribbon to get rid of that dependency. Transparent toolbars with image icons, use Trident to fade in and out on mouse move and typing
+
+Toolbars: Writing, Space (bg + music)
+

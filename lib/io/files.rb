@@ -14,9 +14,10 @@ import java.lang.System
 
 #Self-contained module for all file operations
 module FilesIO
-	@openFile = nil
-
+	
 	module_function
+	def openFile; @openFile end
+	def openFile= v; @openFile = v end
 	def openFileName; @openFileName end
 	def openFileName= v; @openFileName = v end
 
@@ -50,12 +51,14 @@ module FilesIO
 		puts "Resets file"
 		@openFile = nil
 		FilesIO.openFileName = "Untitled"
+		FilesIO.openFile = nil
 	end
 
 	def setOpenFile file
 		puts "Opening file"
 		FilesIO.openFileName = file.getName
 		@openFile = file
+		FilesIO.openFile = file
 	end
 
 	protected

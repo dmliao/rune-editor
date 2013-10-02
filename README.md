@@ -18,6 +18,7 @@ This may change in future updates.
 
 * Plaintext editing
 * New, Open, and Save documents
+* Save new version!
 * External config file to set the text editor's styles
 * Uses Flamingo's JRibbon to create a top ribbon interface
 * Undo / Redo
@@ -30,7 +31,6 @@ This may change in future updates.
 ### Future Plans
 
 * Markdown implementation
-* Autosaving and version control?
 * Using PanDoc (or other converter) to export RTF files
 * Find / Replace
 * Fix styles to be more consistent with Ruby standards
@@ -46,3 +46,4 @@ This project uses the (no longer updated) Flamingo JRibbon library, which has be
 * JTextPane makes long uninterrupted strings create a horizontal scrollbar.
 * HTMLText doesn't support line-height. Until then, I'll have to use plaintext, so no syntax highlighting.
 * Sometimes when opening files, words get cut off until window resize or editing
+* Version viewer errors out when you open a file that doesn't have any versions

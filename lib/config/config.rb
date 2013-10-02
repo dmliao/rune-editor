@@ -47,4 +47,9 @@ module Configuration
 		return @prop.getProperty propertyKey
 	end
 
+	def exportProperties fPath
+		fos = FileOutputStream.new fPath
+		@prop.store fos, nil
+	end
+
 end

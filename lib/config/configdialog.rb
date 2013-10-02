@@ -1,0 +1,1 @@
+# Creates a dialog to edit config files

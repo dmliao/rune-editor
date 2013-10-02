@@ -4,6 +4,7 @@ require_relative "config/textarea.rb"
 
 require_relative "io/files.rb"
 require_relative "io/version.rb"
+require_relative "io/versionviewer.rb"
 
 require_relative "text/footertext.rb"
 require_relative "components/transpanel.rb"
@@ -72,6 +73,8 @@ class App < JFrame
 		Thread.new do
 			while true do
 				self.updateFooterWCText
+				puts getCurrentFile
+				puts getCurrentDocument
 				sleep 2
 			end
 		end
@@ -126,6 +129,10 @@ class App < JFrame
 		return FilesIO.openFileName
 	end
 
+	def getCurrentFile
+		return FilesIO.openFile
+	end
+
 	protected
 	def createHeaderPanel
 		headerPanel = JPanel.new
@@ -173,6 +180,12 @@ class App < JFrame
 	def getFooterText
 		return @footerText.getText
 	end
+
+	def createVersionDialog
+		vDialog = VersionDialog.new self
+		vDialog.setVisible true
+	end
+
 
 	protected
 	def createMainPanel
