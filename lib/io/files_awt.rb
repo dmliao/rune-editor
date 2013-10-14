@@ -1,5 +1,3 @@
-# files module that uses SWT to render dialogs
-
 include Java
 
 import javax.swing.JFileChooser
@@ -14,8 +12,6 @@ import java.io.OutputStreamWriter
 import java.io.FileOutputStream
 import java.lang.System
 java.awt.FileDialog
-
-require_relative '../components/swtdialogs.rb'
 
 #Self-contained module for all file operations
 module FilesIO
@@ -68,9 +64,11 @@ module FilesIO
 
 	protected
 	def handleOpenDocument textPane, frame
-		fileChooser = SWTOpenDialog.new
+		fileChooser = java.awt.FileDialog.new(nil, "Open", java.awt.FileDialog::LOAD)
+		fileChooser.setVisible true
+		
 		if fileChooser.getFile != nil
-			file = fileChooser.getFile
+			file = java.io.File.new fileChooser.getDirectory+fileChooser.getFile
 			begin
 				readDocument file,textPane
 				setOpenFile file
@@ -126,10 +124,11 @@ module FilesIO
 		textPane.updateContent
 		if @openFile == nil || saveAs == true
 
-			fileChooser = SWTSaveDialog.new
+			fileChooser = java.awt.FileDialog.new(nil, "Save", java.awt.FileDialog::SAVE)
+			fileChooser.setVisible true
 			
 			if fileChooser.getFile != nil
-				file = fileChooser.getFile
+				file = java.io.File.new fileChooser.getDirectory+fileChooser.getFile
 				begin
 					
 					if file.isFile
