@@ -12,7 +12,6 @@ require_relative "components/transparentlabel.rb"
 require_relative "components/menubar.rb"
 require_relative "components/writearea.rb"
 require_relative "components/scrollbar.rb"
-require_relative "components/ribbon.rb"
 
 
 include Java
@@ -48,8 +47,6 @@ class App < JFrame
 	@headerPanel = nil
 	@footerPanel = nil
 	@boxLayout = nil
-
-	@ribbon = nil
 
 	@footerText = nil
 
@@ -99,11 +96,6 @@ class App < JFrame
 		
 		@mainPanel.add @page
 		self.add @mainPanel, BorderLayout::CENTER
-
-		@ribbon = ToolbarRibbon.new
-		@ribbon.setDependents @textPanel, self
-		@ribbon.createTasks
-		self.add @ribbon, BorderLayout::NORTH
 
 		self.setVisible true
 		@textPanel.resetEdited
@@ -169,10 +161,6 @@ class App < JFrame
 
 	def getFooterLabel
 		return @footerText
-	end
-
-	def getRibbon
-		return @ribbon
 	end
 
 	# Function to get the current footer text

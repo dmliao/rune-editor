@@ -77,7 +77,6 @@ class WriteMenuBar < JMenuBar
 	def createViewMenu
 		viewMenu = JMenu.new "View"
 
-		viewMenu.add createMenuItem("Show/Hide Ribbon", KeyStroke.getKeyStroke(KeyEvent::VK_H,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), HideShowComponentAction.new(@frame.getRibbon,@frame))
 		viewMenu.add createMenuItem("Versions", KeyStroke.getKeyStroke(KeyEvent::VK_V,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), ShowVersionsAction.new(@frame))
 
 		return viewMenu

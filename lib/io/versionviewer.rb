@@ -16,6 +16,12 @@ import java.io.OutputStreamWriter
 import java.io.FileOutputStream
 import java.lang.System
 import java.awt.Dimension
+import java.awt.Color
+
+import java.awt.BorderLayout
+import java.awt.Component;
+import javax.swing.BoxLayout
+
 
 class VersionDialog < JDialog
 
@@ -30,6 +36,8 @@ class VersionDialog < JDialog
 	end
 	def initGUI
 		backPanel = JPanel.new
+
+		backPanel.setLayout(BoxLayout.new(backPanel,BoxLayout::X_AXIS))
 	
 		scrollPanel = JScrollPane.new backPanel
 		scrollPanel.setPreferredSize Dimension.new 640,480
@@ -40,26 +48,40 @@ class VersionDialog < JDialog
 
 			versionDir = java.io.File.new FilesIO.openFile.getPath+".version"
 
-			for fileEntry in versionDir.listFiles
-				if (!fileEntry.isDirectory)
-					# Add to the scrollpane!
-					versionPanel = JPanel.new 
-					versionPanel.setLayout(GridLayout.new 0,1)
+			if (versionDir.exists == false)
+				# No versions D:
+				setEmptyPane backPanel
+			else
+				for fileEntry in versionDir.listFiles
+					if (!fileEntry.isDirectory)
+						# Add to the scrollpane!
+						versionPanel = JPanel.new 
+						versionPanel.setLayout BorderLayout.new
 
-					tArea = JTextArea.new 120,50
-					tArea.setEditable false
-					readVersion fileEntry,tArea
+						tArea = JTextArea.new 120,50
+						tArea.setEditable false
+						readVersion fileEntry,tArea
 
-					versionPanel.add tArea
-					versionPanel.setPreferredSize(Dimension.new(tArea.getPreferredSize.width+24,tArea.getPreferredSize.height+80))
-				
-					backPanel.add versionPanel
+						versionPanel.add tArea,BorderLayout::CENTER
+						versionPanel.setPreferredSize(Dimension.new(tArea.getPreferredSize.width+24,tArea.getPreferredSize.height+80))
+					
+						versionPanel.setAlignmentY(Component::TOP_ALIGNMENT)
+						versionPanel.setBackground Color::blue
+						backPanel.add versionPanel
 
+					end
 				end
 			end
+		else
+			setEmptyPane backPanel
 		end
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE)
+	end
+
+	# Helper function to populate the panel when no versions of the file exist
+	def setEmptyPane backPanel
+
 	end
 
 	# Helper function for opening files

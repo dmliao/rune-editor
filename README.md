@@ -27,6 +27,7 @@ This may change in future updates.
 ### Immediate Plans
 
 * Settings pane to change the config file in the program
+* Change windows to SWT to emulate native (open, save, and font/color pickers)
 
 ### Future Plans
 

@@ -81,15 +81,39 @@ module FilesIO
 	public
 	def openDocument textPane, frame
 		if textPane.getEdited == true
-			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm Open", JOptionPane::YES_NO_OPTION
+			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save changes to this document?", "Confirm Open", JOptionPane::YES_NO_CANCEL_OPTION
 			if (dialogResult == JOptionPane::YES_OPTION)
 				saveDocument false, textPane, frame # Save the document first!
 				handleOpenDocument textPane, frame # recursively open another document!
-			else	
+			elsif (dialogResult == JOptionPane::NO_OPTION)
 				handleOpenDocument textPane, frame
 			end
 		else
 			handleOpenDocument textPane, frame
+		end
+	end
+
+	def restoreDocument textPane, frame, file
+		if textPane.getEdited == true
+			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save this document as a new version?", "Confirm Open", JOptionPane::YES_NO_CANCEL_OPTION
+			if (dialogResult == JOptionPane::YES_OPTION)
+				f = @openFile
+				if (f == nil)
+					puts "Oops."
+					return
+				end
+
+				dName = setVersionDir f
+
+				autoSaveFile = java.io.File.new dName+"/"+f.getName+".auto"
+
+				saveNewVersion autoSaveFile, textPane, frame # Save the document first!
+				readDocument file,textPane # recursively open another document!
+			elsif (dialogResult == JOptionPane::NO_OPTION)
+				readDocument file,textPane
+			end
+		else
+			readDocument file,textPane
 		end
 	end
 
