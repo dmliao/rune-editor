@@ -207,7 +207,10 @@ class App < JFrame
 	def createScrollPanel textPanel
 		scrollPanel = RuneScrollPane.new textPanel
 		scrollPanel.setBorder nil
-		scrollPanel.setOpaque false
+		scrollPanel.setOpaque true
+
+		scrollPanel.getVerticalScrollBar.addAdjustmentListener(RepaintListener.new self)
+		scrollPanel.getHorizontalScrollBar.addAdjustmentListener(RepaintListener.new self)
 		
 		return scrollPanel
 	end

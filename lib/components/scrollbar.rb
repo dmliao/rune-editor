@@ -70,3 +70,15 @@ class RuneScrollPane < JScrollPane
 		self.getHorizontalScrollBar.setPreferredSize Dimension.new self.getHorizontalScrollBar.getSize.width,thickness
 	end
 end
+
+class RepaintListener
+	include java.awt.event.AdjustmentListener
+	@frame = nil
+	def initialize frame
+		@frame = frame
+	end
+	def adjustmentValueChanged e
+		@frame.repaint
+	end
+end
+
