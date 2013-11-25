@@ -3,8 +3,6 @@ require_relative "config/fonts.rb"
 require_relative "config/textarea.rb"
 
 require_relative "io/files.rb"
-require_relative "io/version.rb"
-require_relative "io/versionviewer.rb"
 
 require_relative "text/footertext.rb"
 require_relative "components/transpanel.rb"

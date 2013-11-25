@@ -97,30 +97,6 @@ module FilesIO
 		end
 	end
 
-	def restoreDocument textPane, frame, file
-		if textPane.getEdited == true
-			dialogResult = JOptionPane.showConfirmDialog frame, "Do you want to save this document as a new version?", "Confirm Open", JOptionPane::YES_NO_CANCEL_OPTION
-			if (dialogResult == JOptionPane::YES_OPTION)
-				f = @openFile
-				if (f == nil)
-					puts "Oops."
-					return
-				end
-
-				dName = setVersionDir f
-
-				autoSaveFile = java.io.File.new dName+"/"+f.getName+".auto"
-
-				saveNewVersion autoSaveFile, textPane, frame # Save the document first!
-				readDocument file,textPane # recursively open another document!
-			elsif (dialogResult == JOptionPane::NO_OPTION)
-				readDocument file,textPane
-			end
-		else
-			readDocument file,textPane
-		end
-	end
-
 	def saveDocument saveAs, textPane, frame
 
 		textPane.updateContent
@@ -151,40 +127,6 @@ module FilesIO
 			puts @openFile.getPath
 			puts textPane.getContent
 			writeDocument @openFile.getPath,textPane
-		end
-		return true
-	end
-
-	# Save a new version of the document in the given File object
-	def saveNewVersion newFile, textPane, frame
-
-		textPane.updateContent
-		if @openFile == nil
-
-			fileChooser = java.awt.FileDialog.new(nil, "Save", java.awt.FileDialog::Save)
-			fileChooser.setVisible true
-			
-			if fileChooser.getFile != nil
-				file = java.io.File.new fileChooser.getDirectory+fileChooser.getFile
-				begin
-					
-					if file.isFile
-						dialogResult = JOptionPane.showConfirmDialog frame, "Overwrite existing file?","Overwrite",JOptionPane::YES_NO_OPTION
-						if (dialogResult == JOptionPane::YES_OPTION)
-							writeDocument file.getPath,textPane
-							setOpenFile file
-						end
-					else
-						writeDocument file.getPath,textPane
-						setOpenFile file
-					end	
-				rescue IOException
-				end
-			else
-				return false
-			end
-		else
-			writeDocument newFile.getPath,textPane
 		end
 		return true
 	end

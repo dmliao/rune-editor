@@ -60,7 +60,7 @@ class WriteMenuBar < JMenuBar
 		fileMenu.add createMenuItem("New", KeyStroke.getKeyStroke(KeyEvent::VK_N,ActionEvent::CTRL_MASK), NewFileClickAction.new(@contentPane, @frame))
 		fileMenu.add createMenuItem("Open", KeyStroke.getKeyStroke(KeyEvent::VK_O,ActionEvent::CTRL_MASK), OpenFileClickAction.new(@contentPane, @frame))
 		fileMenu.add createMenuItem("Save", KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK), SaveFileClickAction.new(false,@contentPane, @frame))
-		fileMenu.add createMenuItem("Save New Version",KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK),SaveVersionClickAction.new(@contentPane, @frame))
+		# fileMenu.add createMenuItem("Save New Version",KeyStroke.getKeyStroke(KeyEvent::VK_S,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK),SaveVersionClickAction.new(@contentPane, @frame))
 
 		return fileMenu
 	end
@@ -76,8 +76,6 @@ class WriteMenuBar < JMenuBar
 
 	def createViewMenu
 		viewMenu = JMenu.new "View"
-
-		viewMenu.add createMenuItem("Versions", KeyStroke.getKeyStroke(KeyEvent::VK_V,ActionEvent::CTRL_MASK+ActionEvent::SHIFT_MASK), ShowVersionsAction.new(@frame))
 
 		return viewMenu
 	end
