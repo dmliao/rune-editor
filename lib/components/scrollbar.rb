@@ -45,7 +45,6 @@ class ScrollBarUI < BasicScrollBarUI
 	end
 end
 
-# TODO: REPAINT FRAME!
 class RuneScrollPane < JScrollPane 
 	@frame = nil
 	def initialize view
@@ -55,9 +54,7 @@ class RuneScrollPane < JScrollPane
 		trackColor = Color.new 0,0,0,24
 		thumbColor = Color.new 0,0,0,128
 
-		setBackground Color.new 0,0,0,0
 		getViewport.setOpaque false
-		
 		setOpaque false
 		
 		ui = ScrollBarUI.new

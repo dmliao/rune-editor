@@ -76,6 +76,7 @@ class App < JFrame
 			end
 		end
 
+
 	end
 
 	# Initializes the GUI and layout of the entire application.
@@ -128,7 +129,6 @@ class App < JFrame
 	protected
 	def createHeaderPanel
 		headerPanel = JPanel.new
-		headerPanel.setOpaque false
 		return headerPanel
 	end
 
@@ -137,7 +137,6 @@ class App < JFrame
 		footerPanel = TranslucentPanel.new
 		
 		@footerText = TransparentLabel.new "Footer Text Here!"
-		@footerText.setOpaque false
 
 		footerPanel.setBorder EmptyBorder.new 0, 0, 0, 0
 		footerPanel.setBackground Color.new 0,0,0,0
@@ -210,6 +209,7 @@ class App < JFrame
 	def createPage textPanel, scrollPanel
 
 		page = JPanel.new BorderLayout.new
+		page.setOpaque false
 		page.add @headerPanel, BorderLayout::NORTH
 		page.add @scrollPanel, BorderLayout::CENTER
 		page.add @footerPanel, BorderLayout::SOUTH
@@ -250,9 +250,9 @@ class App < JFrame
 	def updateConfigs
 		updateTextBoxFont @textPanel
 		updateTextAreaBoundaries @textPanel, @headerPanel, @footerPanel
-		updateTextAreaColor @page
-		updateTextAreaColor @scrollPanel
-		updateTextAreaColor @textPanel
+		updateTextAreaColor @headerPanel
+		updateTextAreaColor @footerPanel
+		
 		updateTextAreaColor @scrollPanel.getVerticalScrollBar
 	end
 

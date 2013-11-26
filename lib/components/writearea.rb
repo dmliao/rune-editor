@@ -47,7 +47,7 @@ class WriteArea < JTextPane
 		@parser = HTML2Text.new
 		@caret = TextCaret.new
 
-		@caret.setBlinkRate 0
+		@caret.setBlinkRate 500
 
 		self.setCaret @caret
 
@@ -111,8 +111,11 @@ class WriteArea < JTextPane
 	end
 
 	def paintComponent g
-		super
+		
         graphics2d = g
+        g.setColor @frame.getTextAreaColor
+        g.fillRect 0,0,getWidth,getHeight
+        super
         graphics2d.setRenderingHint RenderingHints::KEY_TEXT_ANTIALIASING,RenderingHints::VALUE_TEXT_ANTIALIAS_ON
         graphics2d.setRenderingHint RenderingHints::KEY_RENDERING, RenderingHints::VALUE_RENDER_QUALITY
 	end
@@ -171,7 +174,9 @@ class TextCaret < DefaultCaret
 			return
 		end
 		if isVisible
-			g.fillRect r::x, r::y, 1, @height
+			g.fillRect r::x, r::y, 1, @height+2
+		else
+			repaint
 		end
 	end
 

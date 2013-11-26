@@ -18,16 +18,14 @@ This may change in future updates.
 
 * Plaintext editing
 * New, Open, and Save documents
-* Save new version!
 * External config file to set the text editor's styles
-* Uses Flamingo's JRibbon to create a top ribbon interface
 * Undo / Redo
 * Word Count
 
 ### Immediate Plans
 
 * Settings pane to change the config file in the program
-* Change windows to SWT to emulate native (open, save, and font/color pickers)
+* Git integration
 
 ### Future Plans
 
