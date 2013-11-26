@@ -45,8 +45,9 @@ class ScrollBarUI < BasicScrollBarUI
 	end
 end
 
+# TODO: REPAINT FRAME!
 class RuneScrollPane < JScrollPane 
-
+	@frame = nil
 	def initialize view
 		super view
 		thickness = 8
@@ -54,6 +55,11 @@ class RuneScrollPane < JScrollPane
 		trackColor = Color.new 0,0,0,24
 		thumbColor = Color.new 0,0,0,128
 
+		setBackground Color.new 0,0,0,0
+		getViewport.setOpaque false
+		
+		setOpaque false
+		
 		ui = ScrollBarUI.new
 		ui.setStyle thickness, trackColor, thumbColor
 
@@ -69,6 +75,11 @@ class RuneScrollPane < JScrollPane
 		self.getVerticalScrollBar.setPreferredSize Dimension.new thickness,self.getVerticalScrollBar.getSize.height
 		self.getHorizontalScrollBar.setPreferredSize Dimension.new self.getHorizontalScrollBar.getSize.width,thickness
 	end
+
+	def initFrame frame
+		@frame = frame
+	end
+
 end
 
 class RepaintListener

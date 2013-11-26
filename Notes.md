@@ -7,7 +7,7 @@ Window with several panels:
 
 Text / Layout / Background / Save&Load
 
-Also allow for separate config profiles, save and load .properties files :3
+Also allow for separate config profiles, save and load .properties files
 
 Implement a Version Viewer that grabs all of the version files and lists them side by side (like draft)
 Uses a horizontal scrollbar

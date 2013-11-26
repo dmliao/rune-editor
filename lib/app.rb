@@ -7,6 +7,7 @@ require_relative "io/files.rb"
 require_relative "text/footertext.rb"
 require_relative "components/transpanel.rb"
 require_relative "components/transparentlabel.rb"
+require_relative "components/imagepanel.rb"
 require_relative "components/menubar.rb"
 require_relative "components/writearea.rb"
 require_relative "components/scrollbar.rb"
@@ -62,6 +63,7 @@ class App < JFrame
 		@textPanel.resetEdited #start out with a blank textpane
 
 		self.updateFooterWCText
+		self.setBackgroundStyle
 
 		# FIXME: Hack to get word count to update all the time
 		# Find a way to do better!
@@ -175,7 +177,8 @@ class App < JFrame
 
 	protected
 	def createMainPanel
-		mainPanel = JPanel.new
+		mainPanel = ImagePanel.new
+		
 		box = BoxLayout.new mainPanel,BoxLayout::PAGE_AXIS
 		mainPanel.setLayout box
 
@@ -185,6 +188,22 @@ class App < JFrame
 	public
 	def getMainPanel
 		return @mainPanel
+	end
+
+	def setBackgroundStyle
+		imgFile = getProperty "backgroundImage", ""
+		puts imgFile
+		if (java.io.File.new(imgFile).exists == false)
+			# use background color
+			r = getProperty "backgroundRed", "240"
+			g = getProperty "backgroundGreen", "240"
+			b = getProperty "backgroundBlue", "240"
+			@mainPanel.setBackground Color.new r.to_i,g.to_i,b.to_i,255
+			# use background image
+		else
+			puts "Background exists"
+			@mainPanel.setImage imgFile
+		end
 	end
 
 	protected
@@ -204,8 +223,10 @@ class App < JFrame
 	protected
 	def createScrollPanel textPanel
 		scrollPanel = RuneScrollPane.new textPanel
+		scrollPanel.initFrame self
+		scrollPanel.setBackground Color.new 0,0,0,0
 		scrollPanel.setBorder nil
-		scrollPanel.setOpaque true
+		scrollPanel.setOpaque false
 
 		scrollPanel.getVerticalScrollBar.addAdjustmentListener(RepaintListener.new self)
 		scrollPanel.getHorizontalScrollBar.addAdjustmentListener(RepaintListener.new self)
@@ -216,6 +237,7 @@ class App < JFrame
 	protected
 	def createTextPane
 		textPanel = WriteArea.new
+		textPanel.setFrame self
 		textPanel.setOpaque false
 		textPanel.setBorder nil
 		

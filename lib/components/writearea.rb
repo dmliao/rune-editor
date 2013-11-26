@@ -30,6 +30,8 @@ class WriteArea < JTextPane
 	@editorKit = nil # the style editor for an HTML textpane (unused)
 	@caret = nil # the caret used in the text pane
 
+	@frame = nil
+
 	def initialize
 		super
 		@editorKit = HTMLEditorKit.new
@@ -45,7 +47,7 @@ class WriteArea < JTextPane
 		@parser = HTML2Text.new
 		@caret = TextCaret.new
 
-		@caret.setBlinkRate 500
+		@caret.setBlinkRate 0
 
 		self.setCaret @caret
 
@@ -57,6 +59,15 @@ class WriteArea < JTextPane
 		self.initUndoRedo self
 
 		resetEdited
+
+	end
+
+	def setFrame frame
+		@frame = frame
+		frameListener = SimpleDocumentListener.new do
+			@frame.repaint
+		end
+		self.getDocument.addDocumentListener frameListener
 
 	end
 
@@ -100,12 +111,10 @@ class WriteArea < JTextPane
 	end
 
 	def paintComponent g
-		g.setColor getBackground
-        g.fillRect 0, 0, getWidth, getHeight
+		super
         graphics2d = g
         graphics2d.setRenderingHint RenderingHints::KEY_TEXT_ANTIALIASING,RenderingHints::VALUE_TEXT_ANTIALIAS_ON
         graphics2d.setRenderingHint RenderingHints::KEY_RENDERING, RenderingHints::VALUE_RENDER_QUALITY
-		super
 	end
 
 	def updateContent
